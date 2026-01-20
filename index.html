@@ -1,399 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RUBYRED - Effeciency Messurement</title>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-  />
-  <link rel="icon" href="pic/logooo.png" />
-  <style>
-    /* Base Styles */
-    * {
-      box-sizing: border-box;
-    }
-    body, html {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUBYRED - IE Access</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="pic/logooo.png">
+    <style>
+    /* الأساسيات */
+    body {
       margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #888888 0%, #444444 100%);
-      color: #ddd;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1a1a1a;
       min-height: 100vh;
-      display: block;
+      color: #fff;
       overflow-x: hidden;
     }
 
-    #content-section {
-      width: 100%;
-      min-height: 100vh;
-      overflow-y: auto;
-      background: rgb(90, 90, 90);
-      color: #000;
-      position: relative;
-      padding-bottom: 100px;
-    }
-
-    /* Header Styles */
-    header {
+    .top-section {
+      background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('pic/sewing.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 55vh;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      padding: 1rem 3rem;
-      background: rgba(40, 40, 40, 0.9);
-      color: #fff;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      height: 60px;
+      margin-bottom: 50px;
+      text-align: center;
+      padding: 0 20px;
     }
 
-    header h2 {
-      color: #fff;
-      margin: 0;
-      font-size: 1.8rem;
-      position: absolute;
-      left: 10%;
-      transform: translateX(-50%);
-      z-index: 1;
-    }
-    header span {
-      color: #df0c0c;
-    }
+    .name h1 { font-size: 3.5rem; margin: 0; letter-spacing: 3px; text-shadow: 3px 3px 15px rgba(0,0,0,1); }
+    .name span { color: #da3535; }
 
-    .logo img {
-      height: 45px;
-      width: 45px;
-      position: fixed;
-      left: 735px;
-        top: 7px;
+    .nav { width: 100%; display: flex; justify-content: center; margin-top: 30px; }
+    .nav ul { list-style: none; padding: 0; display: flex; gap: 50px; margin: 0; }
+    .nav a { color: #fff; text-decoration: none; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s; font-size: 1.1rem; }
+    .nav a:hover { color: #da3535; }
 
-      /* ===== FIX: PURE SELF ROTATION ===== */
-      animation: spin 4s linear infinite;
-      transform-origin: center center !important;
-      display: block;
-    }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-
-    .menu-btn {
-      z-index: 2;
-      display: none;
-    }
-
-    /* Navigation */
-    #navbar ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-    }
-    #navbar ul li a {
-      color: #fff;
+    /* الكارت المعدل لـ IE */
+    .managers-row { display: flex; justify-content: center; margin-bottom: 30px; padding: 0 20px; }
+    
+    .card {
+      background: #252525;
+      padding: 40px 30px;
+      border-radius: 20px;
+      border: 1px solid #333;
+      text-align: center;
       text-decoration: none;
-      padding: 0.5rem 1rem;
-      font-weight: 600;
-      transition: color 0.3s;
-    }
-    #navbar ul li a:hover {
-      color: #df0c0c;
-    }
-
-    /* Apply Now Button */
-    #logout-btn {
-      width: 300px;
-      height: 110px;
-      position: absolute;
-      top: 300px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #df0c0c;
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 8px;
+      color: #fff;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       cursor: pointer;
-      font-weight: 900;
-      font-size: 1rem;
-      box-shadow: 0 0 15px #df0c0c;
-      transition: background 0.3s ease, box-shadow 0.3s ease;
-      z-index: 900;
-      text-align: center;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .card:hover { transform: translateY(-5px); border-color: #da3535; box-shadow: 0 15px 40px rgba(218, 53, 53, 0.2); }
+    .card h3 { color: #da3535; font-size: 24px; margin-bottom: 15px; text-transform: uppercase; }
+    .card p { color: #aaa; line-height: 1.6; margin: 0;}
+
+    /* نافذة تسجيل الدخول */
+    .login-modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.92); backdrop-filter: blur(10px); z-index: 3000;
+      justify-content: center; align-items: center;
     }
 
-    #logout-btn:hover {
-      background: #c72727;
-      box-shadow: 0 0 25px #c72727;
+    .login-content {
+      background: #222; padding: 40px 30px; border-radius: 30px; width: 85%; max-width: 400px;
+      border: 1px solid #da3535; text-align: center; position: relative;
     }
 
-    #logout-btn a {
-      color: white;
-      text-decoration: none;
-      display: block;
-      width: 100%;
-      height: 100%;
-      font-size: 32px;
-      line-height: 40px;
+    .input-group { position: relative; margin-bottom: 20px; }
+    .input-group .main-icon { position: absolute; left: 15px; top: 18px; color: #da3535; }
+    .input-group input {
+      width: 100%; padding: 15px 45px; background: #111; border: 1px solid #333;
+      border-radius: 12px; color: #fff; font-size: 16px; box-sizing: border-box; outline: none;
     }
 
-    .text {
-      text-align: center;
-      padding-top: 5rem;
-    }
-    .text h1 {
-      color: #eee;
-      font-size: 3rem;
-      margin: 0;
+    .login-btn {
+      width: 100%; padding: 15px; background: #da3535; border: none; border-radius: 12px;
+      color: #fff; font-weight: bold; text-transform: uppercase; cursor: pointer;
     }
 
-    /* Footer */
-    .footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background: rgba(40, 40, 40, 0.9);
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-      height:130px;
+    .close-modal { position: absolute; top: 20px; right: 20px; color: #555; cursor: pointer; font-size: 22px; }
+
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+
+    /* Media Queries لضمان عمل التصميم على الموبايل */
+    @media (max-width: 600px) {
+      .name h1 { font-size: 2.2rem; }
+      .nav ul { gap: 20px; }
+      .nav a { font-size: 0.9rem; }
+      .top-section { height: 45vh; }
     }
-    .footer img {
-      width: 65px;
-      height: 65px;
-      position: fixed;
-      left:719px;
-      bottom:8%;
-      
-    }
-      /* SAME FIX FOR FOOTER LOGO */
-   
-
-    .footer p {
-      font-size: 17px;
-      color: white;
-      font-weight: bold;
-      margin: 0 20px;
-      flex-grow: 1;
-      position: fixed;
-      left:649px;
-      bottom:5%;
-    }
-
-    .social a {
-      color: white;
-      padding: 0 10px;
-      font-size: 22px;
-      transition: color 0.3s;
-      position: relative;
-      left:659px;
-      top:45px
-
-    }
-    .social a:hover {
-      color: #df0c0c;
-    }
-
-    /* Sidebar */
-    #sidebar {
-      position: fixed;
-      top: 60px;
-      right: -250px;
-      width: 250px;
-      height: 100vh;
-      background: rgb(90, 90, 90);
-      opacity: 0.95;
-      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.7);
-      transition: right 0.3s ease;
-      z-index: 2000;
-      padding-top: 5rem;
-      border-radius: 13px;
-    }
-
-    #sidebar.active {
-      right: 0;
-    }
-
-    #sidebar ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    #sidebar ul li {
-      padding: 1rem 1.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    #sidebar ul li a {
-      color: #e0e0e0;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.4rem;
-      display: block;
-      transition: color 0.3s ease;
-    }
-
-    #sidebar ul li a:hover {
-      color: #df0c0c;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .menu-btn { display: block; }
-      #navbar { display: none; }
-      .menu-btn{
-        background: none;
-        border: none;
-        color: white;
-        font-size: 28px;
-        cursor: pointer;
-        position: fixed;
-        right:7%;
-        z-index: 999;
-      }
-      header{
-        height: 60px;
-        
-      }
-      #logout-btn {
-        margin-top: 100px;
-      }
-
-      #logout-btn a {
-        font-size: 26px;
-        position: fixed;
-        left: 0%;
-        bottom: 0%;
-      }
-      .footer p {
-      font-size: 17px;
-      color: white;
-      font-weight: bold;
-      margin: 0 20px;
-      flex-grow: 1;
-      position: fixed;
-      left:28%;
-      bottom:37px;
-    }
-
-    .social a {
-      color: white;
-      padding: 0 10px;
-      font-size: 22px;
-      transition: color 0.3s;
-      position: relative;
-      left: 117px;
-      top:45px
-
-    }
-    .footer img {
-        width: 55px;
-        height: 55px;
-        position: fixed;
-        left:47%;
-        bottom:9%;
-        
-      }
-
-
-      /* FIX: ensure center rotation in mobile */
-      .logo img {
-        transform-origin: center center !important;
-      }
-      .logo {
-        position: fixed;
-        left: 47%;
-        top: 10px;
-        transform: translateX(-50%);
-      }
-   .logo img {
-        height: 45px;
-        width: 45px;
-        position: fixed;
-        left: 0;
-        top: 0;
-        transform: translateX(-50%);
-      }
-
-      header h2 {
-        font-size: 1rem;
-        position: fixed;
-        left:23%;
-      }
-
-      #logout-btn {
-        width: 200px;
-        height: 85px;
-        top: 200px;
-      }
-
-      #logout-btn a {
-        font-size: 22px;
-      }
-    }
-
-  </style>
+    </style>
 </head>
-
 <body>
-  <div id="content-section">
-    <header>
-      <div class="logo">
-        <img src="pic/logooo.png" alt="rubyred" />
-      </div>
 
-      <h2>RUBY<span>RED</span> GARMENT</h2>
-
-      <button class="menu-btn" id="menu-btn">
-        <i class="fas fa-bars"></i>
-      </button>
-
-      <nav id="navbar">
+  <section class="top-section">
+    <div class="header">
+      <div class="name"><h1>RUBY<span>RED</span> GARMENT</h1></div>
+      <nav class="nav">
         <ul>
           <li><a href="index.html">Home</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="HR.html">HR</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
-    </header>
-
-    <div id="sidebar">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
-        <li><a href="https://script.google.com/macros/s/AKfycbxybxdkpmwsXz9OwV3m7k28Eub0cGK1F7YXMx5MmVBNOGxOgc62Ymmo4IdnWX0TAsZo/exec">Check Your Balance</a></li>
-      </ul>
     </div>
+  </section>
 
-    <div class="text"><h1>Welcome to Rubyred</h1></div>
-
-    <button id="logout-btn">
-      <a href="https://docs.google.com/spreadsheets/d/1cJruGgsEYF1puhQlB8KezoYsXw-iNgK3OQh6KQkAn68/edit?usp=sharing">Employees Tracking</a>
-    </button>
+  <div class="managers-row">
+    <div class="card" style="width: 100%; max-width: 500px;" onclick="openLogin()">
+      <h3>IE Department</h3>
+      <p>Industrial Engineering & Efficiency Reports<br><i class="fas fa-lock" style="margin-top:10px;"></i> Restricted Access</p>
+    </div>
   </div>
 
-  <div class="footer">
-    <img src="pic/logooo.png" alt="">
-    <p>RUBYRED GARMENT</p>
+  <div class="login-modal" id="loginModal">
+    <div class="login-content">
+      <i class="fas fa-times close-modal" onclick="closeLogin()"></i>
+      <h2>IE <span>LOGIN</span></h2>
+      
+      <div class="input-group">
+        <i class="fas fa-user main-icon"></i>
+        <input type="text" id="username" placeholder="Username" autocomplete="off">
+      </div>
 
-    <div class="social">
-      <a href="https://www.facebook.com/RUBYREDGARMENTSAE/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://www.linkedin.com/company/rubyred-garment-manufacturing-s-a-e/posts/?feedView=all" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-      <a href="mailto:hr@rubyredgarment.com"><i class="fas fa-envelope"></i></a>
+      <div class="input-group">
+        <i class="fas fa-lock main-icon"></i>
+        <input type="password" id="password" placeholder="Password">
+      </div>
+
+      <button class="login-btn" onclick="validateLogin()">Login Access</button>
+      <div id="error-msg" style="color: #ff4d4d; margin-top: 15px; font-size: 14px; display: none; font-weight: bold;">Invalid Credentials. Access Denied!</div>
     </div>
   </div>
 
   <script>
-    document.getElementById('menu-btn').onclick = () => {
-      document.getElementById('sidebar').classList.toggle('active');
-    };
-  </script>
+    const modal = document.getElementById('loginModal');
+    const errorMsg = document.getElementById('error-msg');
+    const userInput = document.getElementById('username');
+    const passInput = document.getElementById('password');
 
+    function openLogin() {
+      modal.style.display = 'flex';
+      errorMsg.style.display = 'none';
+      userInput.focus();
+    }
+
+    function closeLogin() {
+      modal.style.display = 'none';
+      userInput.value = '';
+      passInput.value = '';
+    }
+
+    function validateLogin() {
+      // تعديل بيانات الدخول والصفحة الموجه إليها
+      if (userInput.value === "IE" && passInput.value === "IE112233") {
+        window.location.href = "IE.html";
+      } else {
+        errorMsg.style.display = 'block';
+        const content = document.querySelector('.login-content');
+        content.style.animation = 'none';
+        setTimeout(() => { content.style.animation = 'shake 0.4s'; }, 10);
+      }
+    }
+
+    // السماح بالدخول عند ضغط زر Enter
+    [userInput, passInput].forEach(input => {
+        input.addEventListener('keypress', (e) => { if (e.key === 'Enter') validateLogin(); });
+    });
+
+    window.onclick = (event) => { if (event.target == modal) closeLogin(); }
+  </script>
 </body>
 </html>
