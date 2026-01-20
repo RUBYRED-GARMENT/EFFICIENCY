@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="icon" href="pic/logooo.png">
     <style>
-    /* تنسيقات الصفحة الأساسية */
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -39,7 +38,6 @@
     .nav a { color: #fff; text-decoration: none; font-weight: 600; text-transform: uppercase; transition: 0.3s; font-size: 1.1rem; }
     .nav a:hover { color: #da3535; }
 
-    /* تنسيق الكروت */
     .cards-container {
       display: grid; 
       grid-template-columns: repeat(2, 1fr); 
@@ -57,7 +55,7 @@
       text-align: center;
       text-decoration: none;
       color: #fff;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: all 0.4s;
       cursor: pointer;
       display: flex; flex-direction: column; justify-content: center;
     }
@@ -65,7 +63,6 @@
     .card h3 { color: #da3535; font-size: 24px; margin-bottom: 15px; text-transform: uppercase; }
     .card p { color: #aaa; line-height: 1.6; margin: 0;}
 
-    /* نافذة تسجيل الدخول */
     .login-modal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.92); backdrop-filter: blur(10px); z-index: 3000;
@@ -77,10 +74,9 @@
       border: 1px solid #da3535; text-align: center; position: relative;
     }
 
-    .input-group { position: relative; margin-bottom: 20px; }
     .input-group input {
       width: 100%; padding: 15px; background: #111; border: 1px solid #333;
-      border-radius: 12px; color: #fff; font-size: 16px; box-sizing: border-box; outline: none;
+      border-radius: 12px; color: #fff; font-size: 16px; box-sizing: border-box; outline: none; margin-bottom: 15px;
     }
 
     .login-btn {
@@ -94,7 +90,6 @@
 
     @media (max-width: 600px) {
       .name h1 { font-size: 2.2rem; }
-      .nav ul { gap: 20px; }
       .cards-container { grid-template-columns: 1fr; }
     }
     </style>
@@ -108,7 +103,6 @@
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="HR.html">HR</a></li>
-          <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
     </div>
@@ -116,13 +110,13 @@
 
   <div class="cards-container">
     <div class="card" onclick="openLogin()">
-      <h3 id="cardTitle">Employees Tracking</h3>
-      <p>Assign Employees To Lines<br><i class="fas fa-lock" style="margin-top:10px;"></i> Secured Access</p>
+      <h3>Employees Tracking</h3>
+      <p>Secure Department Login</p>
     </div>
     
-    <a href="https://docs.google.com/spreadsheets/d/1cJruGgsEYF1puhQlB8KezoYsXw-iNgK3OQh6KQkAn68/edit?gid=2118009578#gid=2118009578" class="card">
+    <a href="https://docs.google.com/spreadsheets/d/1cJruGgsEYF1puhQlB8KezoYsXw-iNgK3OQh6KQkAn68/edit" class="card">
       <h3>Data Sheet</h3>
-      <p>Data Sheet of Employees</p>
+      <p>View Records</p>
     </a>
   </div>
 
@@ -132,12 +126,10 @@
       <h2>IE <span>LOGIN</span></h2>
       <div class="input-group">
         <input type="text" id="username" placeholder="Username" autocomplete="off">
-      </div>
-      <div class="input-group">
         <input type="password" id="password" placeholder="Password">
       </div>
-      <button class="login-btn" onclick="validateLogin()">Login & Start</button>
-      <div id="error-msg" style="color: #ff4d4d; margin-top: 15px; display: none; font-weight: bold;">Invalid Credentials!</div>
+      <button class="login-btn" onclick="validateLogin()">Login & Proceed</button>
+      <div id="error-msg" style="color: #ff4d4d; margin-top: 15px; display: none;">Invalid Username or Password!</div>
     </div>
   </div>
 
@@ -145,48 +137,47 @@
     const modal = document.getElementById('loginModal');
     const userInput = document.getElementById('username');
     const passInput = document.getElementById('password');
-    const errorMsg = document.getElementById('error-msg');
 
-    // 1. قراءة الـ ID من الرابط تلقائياً
+    // 1. جلب الكود من الرابط
     const urlParams = new URLSearchParams(window.location.search);
     const workerID = urlParams.get('id') || "";
 
-    // 2. إذا دخل الموظف عن طريق QR (يوجد ID في الرابط)، تظهر نافذة الدخول فوراً
+    // 2. الفتح التلقائي لو الموظف داخل من QR
     window.onload = function() {
-      if(workerID) {
-        document.getElementById('cardTitle').innerText = "ID: " + workerID;
-        setTimeout(openLogin, 600); 
-      }
+        if (workerID !== "") {
+            setTimeout(openLogin, 500);
+        }
     }
 
     function openLogin() { 
-      modal.style.display = 'flex'; 
-      errorMsg.style.display = 'none';
-      userInput.focus(); 
+        modal.style.display = 'flex'; 
+        userInput.focus(); 
     }
     
     function closeLogin() { modal.style.display = 'none'; }
 
     function validateLogin() {
-      // التحقق من البيانات المطلوبة
+      // التحقق من اليوزر والباسورد
       if (userInput.value === "IE" && passInput.value === "IE112233") {
-        // التوجه للفورم مع إرسال الكود تلقائياً
-        const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSeicQTernm1b5icpDZZJlD9V8PrEBMIxbpeO1u0FrSDH6M5aA/viewform?usp=pp_url&entry.2126207000=" + workerID;
-        window.location.href = formURL;
+        
+        // 3. التوجه للفورم وتعبئة خانة الكود entry.1490237124
+        const baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeicQTernm1b5icpDZZJlD9V8PrEBMIxbpeO1u0FrSDH6M5aA/viewform";
+        const prefilledParams = "?usp=pp_url&entry.1490237124=" + encodeURIComponent(workerID);
+        
+        window.location.href = baseUrl + prefilledParams;
       } else {
-        errorMsg.style.display = 'block';
+        document.getElementById('error-msg').style.display = 'block';
         document.getElementById('modalBox').style.animation = 'shake 0.4s';
         setTimeout(() => { document.getElementById('modalBox').style.animation = ''; }, 400);
       }
     }
 
-    // دعم الضغط على زر Enter للدخول
-    [userInput, passInput].forEach(input => {
-        input.addEventListener('keypress', (e) => { if (e.key === 'Enter') validateLogin(); });
+    // دعم زر Enter في الخانتين
+    [userInput, passInput].forEach(el => {
+        el.addEventListener('keypress', (e) => { if (e.key === 'Enter') validateLogin(); });
     });
 
     window.onclick = (event) => { if (event.target == modal) closeLogin(); }
   </script>
 </body>
 </html>
-
