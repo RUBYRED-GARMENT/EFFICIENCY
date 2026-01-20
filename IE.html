@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RUBYRED - Home</title>
+    <title>RUBYRED - IE Department</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="icon" href="pic/logooo.png">
     <style>
-    /* الأساسيات */
+    /* الأساسيات الأصلية لصفحة IE */
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #1a1a1a;
       min-height: 100vh;
       color: #fff;
-      overflow-x: hidden; /* Prevent horizontal scroll */
+      overflow-x: hidden;
     }
 
     .top-section {
@@ -34,27 +34,12 @@
     .name h1 { font-size: 3.5rem; margin: 0; letter-spacing: 3px; text-shadow: 3px 3px 15px rgba(0,0,0,1); }
     .name span { color: #da3535; }
 
-    /* القائمة في المنتصف */
-    .nav {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin-top: 30px;
-    }
-
-    .nav ul {
-      list-style: none; padding: 0; display: flex; gap: 50px; margin: 0;
-    }
-
-    .nav a { 
-      color: #fff; text-decoration: none; font-weight: 600; text-transform: uppercase; 
-      letter-spacing: 1.5px; transition: 0.3s; font-size: 1.1rem;
-    }
+    .nav { width: 100%; display: flex; justify-content: center; margin-top: 30px; }
+    .nav ul { list-style: none; padding: 0; display: flex; gap: 50px; margin: 0; }
+    .nav a { color: #fff; text-decoration: none; font-weight: 600; text-transform: uppercase; transition: 0.3s; font-size: 1.1rem; }
     .nav a:hover { color: #da3535; }
 
     /* الكروت */
-    .managers-row { display: flex; justify-content: center; margin-bottom: 30px; padding: 0 20px; }
-    
     .cards-container {
       display: grid; 
       grid-template-columns: repeat(2, 1fr); 
@@ -80,7 +65,7 @@
     .card h3 { color: #da3535; font-size: 24px; margin-bottom: 15px; text-transform: uppercase; }
     .card p { color: #aaa; line-height: 1.6; margin: 0;}
 
-    /* نافذة تسجيل الدخول */
+    /* نافذة تسجيل الدخول (Login Modal) */
     .login-modal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.92); backdrop-filter: blur(10px); z-index: 3000;
@@ -93,9 +78,8 @@
     }
 
     .input-group { position: relative; margin-bottom: 20px; }
-    .input-group .main-icon { position: absolute; left: 15px; top: 18px; color: #da3535; }
     .input-group input {
-      width: 100%; padding: 15px 45px; background: #111; border: 1px solid #333;
+      width: 100%; padding: 15px; background: #111; border: 1px solid #333;
       border-radius: 12px; color: #fff; font-size: 16px; box-sizing: border-box; outline: none;
     }
 
@@ -106,48 +90,13 @@
 
     .close-modal { position: absolute; top: 20px; right: 20px; color: #555; cursor: pointer; font-size: 22px; }
 
-    /* ========================================= */
-    /* RESPONSIVE MEDIA QUERIES            */
-    /* ========================================= */
-
-    /* For Tablets (Max width 992px) */
-    @media (max-width: 992px) {
-      .cards-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns instead of 3 */
-      }
-    }
-
-    /* For Mobile Phones (Max width 600px) */
-    @media (max-width: 600px) {
-      .name h1 { font-size: 2.2rem; } /* Shrink title */
-      
-      .nav ul { 
-        gap: 20px; /* Reduce space between menu items */
-      }
-      
-      .nav a { font-size: 0.9rem; }
-
-      .cards-container {
-        grid-template-columns: 1fr; /* 1 column (Stack cards) */
-        gap: 20px;
-      }
-
-      .top-section {
-        height: 45vh; /* Slightly shorter header on mobile */
-      }
-
-      .card {
-        padding: 30px 20px;
-      }
-
-      .login-content {
-        padding: 30px 20px;
-      }
-    }
-    
-    /* Animation for Login Modal */
-    @keyframes modalFade { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+
+    @media (max-width: 600px) {
+      .name h1 { font-size: 2.2rem; }
+      .nav ul { gap: 20px; }
+      .cards-container { grid-template-columns: 1fr; }
+    }
     </style>
 </head>
 <body>
@@ -165,78 +114,64 @@
     </div>
   </section>
 
-
   <div class="cards-container">
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeicQTernm1b5icpDZZJlD9V8PrEBMIxbpeO1u0FrSDH6M5aA/viewform?usp=sharing&ouid=113713590870694804869" class="card"><h3>Employees Tracking</h3><p>Assign Employees To Lines</p></a>
-    <a href="https://docs.google.com/spreadsheets/d/1cJruGgsEYF1puhQlB8KezoYsXw-iNgK3OQh6KQkAn68/edit?gid=2118009578#gid=2118009578" class="card"><h3>Data Sheet</h3><p>Data Sheet of Employees</p></a>
+    <div class="card" onclick="openLogin()">
+      <h3 id="cardTitle">Employees Tracking</h3>
+      <p>Assign Employees To Lines<br><i class="fas fa-lock" style="margin-top:10px;"></i> Secured Access</p>
+    </div>
+    
+    <a href="https://docs.google.com/spreadsheets/d/1cJruGgsEYF1puhQlB8KezoYsXw-iNgK3OQh6KQkAn68/edit?gid=2118009578#gid=2118009578" class="card">
+      <h3>Data Sheet</h3>
+      <p>Data Sheet of Employees</p>
+    </a>
   </div>
 
   <div class="login-modal" id="loginModal">
-    <div class="login-content">
+    <div class="login-content" id="modalBox">
       <i class="fas fa-times close-modal" onclick="closeLogin()"></i>
-      <h2>MANAGERS <span>LOGIN</span></h2>
-      
+      <h2>IE <span>LOGIN</span></h2>
       <div class="input-group">
-        <i class="fas fa-user main-icon"></i>
         <input type="text" id="username" placeholder="Username" autocomplete="off">
       </div>
-
       <div class="input-group">
-        <i class="fas fa-lock main-icon"></i>
         <input type="password" id="password" placeholder="Password">
-        <i class="fas fa-eye toggle-password" id="eyeIcon" onclick="togglePassword()"></i>
       </div>
-
-      <button class="login-btn" onclick="validateLogin()">Login Access</button>
-      <div id="error-msg" style="color: #ff4d4d; margin-top: 15px; font-size: 14px; display: none; font-weight: bold;">Invalid Credentials. Access Denied!</div>
+      <button class="login-btn" onclick="validateLogin()">Access Form</button>
+      <div id="error-msg" style="color: #ff4d4d; margin-top: 15px; display: none;">Invalid Credentials!</div>
     </div>
   </div>
 
   <script>
     const modal = document.getElementById('loginModal');
-    const errorMsg = document.getElementById('error-msg');
     const userInput = document.getElementById('username');
     const passInput = document.getElementById('password');
-    const eyeIcon = document.getElementById('eyeIcon');
 
-    function openLogin() {
-      modal.style.display = 'flex';
-      errorMsg.style.display = 'none';
-      userInput.focus();
+    // سحب كود العامل من الرابط (QR Code)
+    const urlParams = new URLSearchParams(window.location.search);
+    const workerID = urlParams.get('id') || "";
+
+    // عرض الكود على الكارت للتاكيد
+    if(workerID) {
+      document.getElementById('cardTitle').innerText = "ID: " + workerID;
     }
 
-    function closeLogin() {
-      modal.style.display = 'none';
-      userInput.value = '';
-      passInput.value = '';
-      passInput.type = 'password';
-      eyeIcon.className = 'fas fa-eye toggle-password';
-    }
-
-    function togglePassword() {
-        if (passInput.type === 'password') {
-            passInput.type = 'text';
-            eyeIcon.className = 'fas fa-eye-slash toggle-password';
-        } else {
-            passInput.type = 'password';
-            eyeIcon.className = 'fas fa-eye toggle-password';
-        }
-    }
+    function openLogin() { modal.style.display = 'flex'; userInput.focus(); }
+    function closeLogin() { modal.style.display = 'none'; }
 
     function validateLogin() {
-      if (userInput.value === "RUBYRED" && passInput.value === "RUBYRED2006") {
-        window.location.href = "managers.html";
+      // اليوزر والباسورد المطلوبة
+      if (userInput.value === "IE" && passInput.value === "IE112233") {
+        
+        // التوجه للفورم مع إرسال الكود تلقائياً
+        const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSeicQTernm1b5icpDZZJlD9V8PrEBMIxbpeO1u0FrSDH6M5aA/viewform?usp=pp_url&entry.2126207000=" + workerID;
+        
+        window.location.href = formURL;
       } else {
-        errorMsg.style.display = 'block';
-        const content = document.querySelector('.login-content');
-        content.style.animation = 'none';
-        setTimeout(() => { content.style.animation = 'shake 0.4s'; }, 10);
+        document.getElementById('error-msg').style.display = 'block';
+        document.getElementById('modalBox').style.animation = 'shake 0.4s';
+        setTimeout(() => { document.getElementById('modalBox').style.animation = ''; }, 400);
       }
     }
-
-    [userInput, passInput].forEach(input => {
-        input.addEventListener('keypress', (e) => { if (e.key === 'Enter') validateLogin(); });
-    });
 
     window.onclick = (event) => { if (event.target == modal) closeLogin(); }
   </script>
