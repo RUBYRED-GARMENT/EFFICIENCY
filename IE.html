@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="icon" href="pic/logooo.png">
     <style>
-    /* الأساسيات الأصلية لصفحة IE */
+    /* تنسيقات الصفحة الأساسية */
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -39,7 +39,7 @@
     .nav a { color: #fff; text-decoration: none; font-weight: 600; text-transform: uppercase; transition: 0.3s; font-size: 1.1rem; }
     .nav a:hover { color: #da3535; }
 
-    /* الكروت */
+    /* تنسيق الكروت */
     .cards-container {
       display: grid; 
       grid-template-columns: repeat(2, 1fr); 
@@ -65,7 +65,7 @@
     .card h3 { color: #da3535; font-size: 24px; margin-bottom: 15px; text-transform: uppercase; }
     .card p { color: #aaa; line-height: 1.6; margin: 0;}
 
-    /* نافذة تسجيل الدخول (Login Modal) */
+    /* نافذة تسجيل الدخول */
     .login-modal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.92); backdrop-filter: blur(10px); z-index: 3000;
@@ -103,7 +103,7 @@
 
   <section class="top-section">
     <div class="header">
-      <div class="name"><h1>RUBY<span>RED</span> GARMENT</h1></div>
+      <div class="name"><h1>IE<span> DEPARTMENT</span></h1></div>
       <nav class="nav">
         <ul>
           <li><a href="index.html">Home</a></li>
@@ -136,8 +136,8 @@
       <div class="input-group">
         <input type="password" id="password" placeholder="Password">
       </div>
-      <button class="login-btn" onclick="validateLogin()">Access Form</button>
-      <div id="error-msg" style="color: #ff4d4d; margin-top: 15px; display: none;">Invalid Credentials!</div>
+      <button class="login-btn" onclick="validateLogin()">Login & Start</button>
+      <div id="error-msg" style="color: #ff4d4d; margin-top: 15px; display: none; font-weight: bold;">Invalid Credentials!</div>
     </div>
   </div>
 
@@ -145,33 +145,45 @@
     const modal = document.getElementById('loginModal');
     const userInput = document.getElementById('username');
     const passInput = document.getElementById('password');
+    const errorMsg = document.getElementById('error-msg');
 
-    // سحب كود العامل من الرابط (QR Code)
+    // 1. قراءة الـ ID من الرابط تلقائياً
     const urlParams = new URLSearchParams(window.location.search);
     const workerID = urlParams.get('id') || "";
 
-    // عرض الكود على الكارت للتاكيد
-    if(workerID) {
-      document.getElementById('cardTitle').innerText = "ID: " + workerID;
+    // 2. إذا دخل الموظف عن طريق QR (يوجد ID في الرابط)، تظهر نافذة الدخول فوراً
+    window.onload = function() {
+      if(workerID) {
+        document.getElementById('cardTitle').innerText = "ID: " + workerID;
+        setTimeout(openLogin, 600); 
+      }
     }
 
-    function openLogin() { modal.style.display = 'flex'; userInput.focus(); }
+    function openLogin() { 
+      modal.style.display = 'flex'; 
+      errorMsg.style.display = 'none';
+      userInput.focus(); 
+    }
+    
     function closeLogin() { modal.style.display = 'none'; }
 
     function validateLogin() {
-      // اليوزر والباسورد المطلوبة
+      // التحقق من البيانات المطلوبة
       if (userInput.value === "IE" && passInput.value === "IE112233") {
-        
         // التوجه للفورم مع إرسال الكود تلقائياً
         const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSeicQTernm1b5icpDZZJlD9V8PrEBMIxbpeO1u0FrSDH6M5aA/viewform?usp=pp_url&entry.2126207000=" + workerID;
-        
         window.location.href = formURL;
       } else {
-        document.getElementById('error-msg').style.display = 'block';
+        errorMsg.style.display = 'block';
         document.getElementById('modalBox').style.animation = 'shake 0.4s';
         setTimeout(() => { document.getElementById('modalBox').style.animation = ''; }, 400);
       }
     }
+
+    // دعم الضغط على زر Enter للدخول
+    [userInput, passInput].forEach(input => {
+        input.addEventListener('keypress', (e) => { if (e.key === 'Enter') validateLogin(); });
+    });
 
     window.onclick = (event) => { if (event.target == modal) closeLogin(); }
   </script>
