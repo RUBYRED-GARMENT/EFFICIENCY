@@ -1,178 +1,239 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RUBYRED - IE Access</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RUBYRED - IE Department</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="icon" href="pic/logooo.png">
-    <style>
-    /* الأساسيات */
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #1a1a1a;
-      min-height: 100vh;
-      color: #fff;
-      overflow-x: hidden;
-    }
-
-    .top-section {
-      background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('pic/sewing.jpg');
-      background-size: cover;
-      background-position: center;
-      height: 55vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 50px;
-      text-align: center;
-      padding: 0 20px;
-    }
-
-    .name h1 { font-size: 3.5rem; margin: 0; letter-spacing: 3px; text-shadow: 3px 3px 15px rgba(0,0,0,1); }
-    .name span { color: #da3535; }
-
-    .nav { width: 100%; display: flex; justify-content: center; margin-top: 30px; }
-    .nav ul { list-style: none; padding: 0; display: flex; gap: 50px; margin: 0; }
-    .nav a { color: #fff; text-decoration: none; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s; font-size: 1.1rem; }
-    .nav a:hover { color: #da3535; }
-
-    /* الكارت المعدل لـ IE */
-    .managers-row { display: flex; justify-content: center; margin-bottom: 30px; padding: 0 20px; }
+    <script src="https://unpkg.com/html5-qrcode"></script>
     
-    .card {
-      background: #252525;
-      padding: 40px 30px;
-      border-radius: 20px;
-      border: 1px solid #333;
-      text-align: center;
-      text-decoration: none;
-      color: #fff;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      cursor: pointer;
-      display: flex; flex-direction: column; justify-content: center;
-    }
-    .card:hover { transform: translateY(-5px); border-color: #da3535; box-shadow: 0 15px 40px rgba(218, 53, 53, 0.2); }
-    .card h3 { color: #da3535; font-size: 24px; margin-bottom: 15px; text-transform: uppercase; }
-    .card p { color: #aaa; line-height: 1.6; margin: 0;}
+    <style>
+        :root {
+            --primary-red: #da3535;
+            --bg-dark: #1a1a1a;
+            --card-bg: #252525;
+            --text-white: #ffffff;
+        }
 
-    /* نافذة تسجيل الدخول */
-    .login-modal {
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.92); backdrop-filter: blur(10px); z-index: 3000;
-      justify-content: center; align-items: center;
-    }
+        body { 
+            margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; 
+            background: var(--bg-dark); color: var(--text-white); overflow-x: hidden; 
+        }
+        
+        .top-section { 
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('pic/sewing.jpg'); 
+            background-size: cover; background-position: center; height: 40vh; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            text-align: center; padding: 0 1rem; 
+        }
+        .name h1 { font-size: clamp(1.8rem, 7vw, 3.5rem); margin: 0; letter-spacing: 2px; }
+        .name span { color: var(--primary-red); }
 
-    .login-content {
-      background: #222; padding: 40px 30px; border-radius: 30px; width: 85%; max-width: 400px;
-      border: 1px solid #da3535; text-align: center; position: relative;
-    }
+        .cards-container { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px; max-width: 1200px; margin: 2rem auto; padding: 0 1rem; 
+        }
+        .card { 
+            background: var(--card-bg); padding: 2rem 1.5rem; border-radius: 20px; 
+            border: 1px solid #333; text-align: center; cursor: pointer; transition: 0.3s;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .card:hover { border-color: var(--primary-red); transform: translateY(-5px); }
+        .card i { font-size: 2.5rem; color: var(--primary-red); margin-bottom: 15px; }
+        .card h3 { font-size: 1.3rem; margin-bottom: 8px; color: var(--primary-red); }
+        .card p { font-size: 0.9rem; color: #aaa; margin: 0; }
 
-    .input-group { position: relative; margin-bottom: 20px; }
-    .input-group .main-icon { position: absolute; left: 15px; top: 18px; color: #da3535; }
-    .input-group input {
-      width: 100%; padding: 15px 45px; background: #111; border: 1px solid #333;
-      border-radius: 12px; color: #fff; font-size: 16px; box-sizing: border-box; outline: none;
-    }
+        .modal-overlay { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.98); z-index: 9999; align-items: center; justify-content: center; padding: 15px;
+        }
+        .modal-content { 
+            background: #111; padding: 2.5rem 1.5rem; border-radius: 25px; width: 100%; 
+            max-width: 400px; border: 1px solid var(--primary-red); text-align: center; position: relative;
+        }
+        .close-x { position: absolute; top: 15px; right: 20px; color: var(--primary-red); font-size: 2rem; cursor: pointer; }
 
-    .login-btn {
-      width: 100%; padding: 15px; background: #da3535; border: none; border-radius: 12px;
-      color: #fff; font-weight: bold; text-transform: uppercase; cursor: pointer;
-    }
+        .modal-content h2 { font-size: 1.8rem; margin-bottom: 20px; letter-spacing: 2px; }
+        .modal-content h2 span { color: var(--primary-red); }
 
-    .close-modal { position: absolute; top: 20px; right: 20px; color: #555; cursor: pointer; font-size: 22px; }
+        .input-field { 
+            width: 100%; padding: 12px; background: #222; border: 1px solid #444; 
+            border-radius: 10px; color: #fff; margin-bottom: 15px; box-sizing: border-box; font-size: 1rem;
+        }
+        .btn-main { 
+            width: 100%; padding: 14px; background: var(--primary-red); border: none; 
+            border-radius: 10px; color: #fff; font-weight: bold; cursor: pointer; font-size: 1rem;
+        }
 
-    @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+        .scanner-content {
+            background: #111; width: 100%; max-width: 450px; padding: 1rem; 
+            border-radius: 25px; border: 2px solid var(--primary-red); position: relative;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+        }
+        
+        .counter-box {
+            background: var(--primary-red); color: white; padding: 4px 18px; 
+            border-radius: 50px; font-size: 1.1rem; font-weight: bold; margin-bottom: 5px;
+        }
 
-    /* Media Queries لضمان عمل التصميم على الموبايل */
-    @media (max-width: 600px) {
-      .name h1 { font-size: 2.2rem; }
-      .nav ul { gap: 20px; }
-      .nav a { font-size: 0.9rem; }
-      .top-section { height: 45vh; }
-    }
+        #reader { 
+            width: 100% !important; max-width: 240px; border-radius: 15px; 
+            overflow: hidden; border: 1px solid #333; background: #000;
+        }
+
+        .status-msg { 
+            font-weight: bold; font-size: 1.2rem; color: #00ff00; 
+            padding: 5px; min-height: 1.6rem; text-align: center; width: 100%;
+        }
+
+        .flash-success { border-color: #00ff00 !important; box-shadow: 0 0 25px rgba(0, 255, 0, 0.3); }
+
+        @media (max-width: 400px) {
+            .scanner-content { padding: 0.8rem; }
+            #reader { max-width: 210px; }
+        }
     </style>
 </head>
 <body>
 
-  <section class="top-section">
-    <div class="header">
-      <div class="name"><h1>RUBY<span>RED</span> GARMENT</h1></div>
-      <nav class="nav">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="HR.html">HR</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
+<section class="top-section">
+    <div class="name"><h1>RUBY<span>RED</span>GARMENT</h1></div>
+</section>
+
+<div class="cards-container">
+    
+    <div class="card" onclick="openLogin('scanner')">
+        <i class="fas fa-qrcode"></i>
+        <h3>Scanner</h3>
+        <p>Production Scanning </p>
     </div>
-  </section>
-
-  <div class="managers-row">
-    <div class="card" style="width: 100%; max-width: 500px;" onclick="openLogin()">
-      <h3>IE Department</h3>
-      <p>Industrial Engineering & Efficiency Reports<br><i class="fas fa-lock" style="margin-top:10px;"></i> Restricted Access</p>
+    <div class="card" onclick="openLogin('sheet')">
+        <i class="fas fa-file-invoice"></i>
+        <h3>Data</h3>
+        <p>View Sheet </p>
     </div>
-  </div>
+</div>
 
-  <div class="login-modal" id="loginModal">
-    <div class="login-content">
-      <i class="fas fa-times close-modal" onclick="closeLogin()"></i>
-      <h2>IE <span>LOGIN</span></h2>
-      
-      <div class="input-group">
-        <i class="fas fa-user main-icon"></i>
-        <input type="text" id="username" placeholder="Username" autocomplete="off">
-      </div>
-
-      <div class="input-group">
-        <i class="fas fa-lock main-icon"></i>
-        <input type="password" id="password" placeholder="Password">
-      </div>
-
-      <button class="login-btn" onclick="validateLogin()">Login Access</button>
-      <div id="error-msg" style="color: #ff4d4d; margin-top: 15px; font-size: 14px; display: none; font-weight: bold;">Invalid Credentials. Access Denied!</div>
+<div class="modal-overlay" id="loginModal">
+    <div class="modal-content">
+        <i class="fas fa-times close-x" onclick="closeLogin()"></i>
+        <h2>IE <span>LOGIN</span></h2>
+        <input type="text" id="username" class="input-field" placeholder="Username">
+        <input type="password" id="password" class="input-field" placeholder="Password">
+        <button class="btn-main" onclick="validateLogin()">Login</button>
+        <p id="error-msg" style="color:var(--primary-red); display:none; margin-top:10px;">Invalid!</p>
     </div>
-  </div>
+</div>
 
-  <script>
-    const modal = document.getElementById('loginModal');
-    const errorMsg = document.getElementById('error-msg');
-    const userInput = document.getElementById('username');
-    const passInput = document.getElementById('password');
+<div class="modal-overlay" id="scannerModal">
+    <div class="scanner-content" id="scanBox">
+        <i class="fas fa-times close-x" onclick="closeScanner()"></i>
+        
+        <div class="counter-box">Total: <span id="count">0</span></div>
+        
+        <select id="engName" class="input-field">
+            <option value="">Engineer Name</option>
+            <option value="Eng. Mahmoud">Eng. Mahmoud</option>
+            <option value="Eng. Ahmed">Eng. Ahmed</option>
+        </select>
+        
+        <select id="lineSelector" class="input-field"></select>
 
-    function openLogin() {
-      modal.style.display = 'flex';
-      errorMsg.style.display = 'none';
-      userInput.focus();
+        <div id="scanStatus" class="status-msg">Ready to Scan...</div>
+        
+        <div id="reader"></div>
+    </div>
+</div>
+
+<script>
+    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbwVN_ueZ_O_KCgfUCV8Z8lO6h5D2E5utC1HbxnNbw02QK_EoXt23dpmYuGpMWu9ZOzr/exec"; 
+    const SHEET_URL = "https://docs.google.com/spreadsheets/d/1bQNLeed5vvN9SGZZ60CXS7cvQItFhwlVUGPgPCOmNfM/edit?gid=0#gid=0";
+
+    let html5QrCode, currentMode, isScanning = false, totalCount = 0, lastCode = "";
+
+    const lineDropdown = document.getElementById('lineSelector');
+    for(let i=1; i<=24; i++){
+        let opt = document.createElement('option');
+        opt.value = "Line " + i; opt.text = "Line " + i;
+        lineDropdown.appendChild(opt);
     }
 
-    function closeLogin() {
-      modal.style.display = 'none';
-      userInput.value = '';
-      passInput.value = '';
-    }
+    function openLogin(mode) { currentMode = mode; document.getElementById('loginModal').style.display = 'flex'; }
+    function closeLogin() { document.getElementById('loginModal').style.display = 'none'; }
 
     function validateLogin() {
-      // تعديل بيانات الدخول والصفحة الموجه إليها
-      if (userInput.value === "IE" && passInput.value === "IE112233") {
-        window.location.href = "IE.html";
-      } else {
-        errorMsg.style.display = 'block';
-        const content = document.querySelector('.login-content');
-        content.style.animation = 'none';
-        setTimeout(() => { content.style.animation = 'shake 0.4s'; }, 10);
-      }
+        if(document.getElementById('username').value === "IE" && document.getElementById('password').value === "IE112233") {
+            closeLogin();
+            if(currentMode === 'scanner') startScanner();
+            else if(currentMode === 'sheet') window.location.href = SHEET_URL;
+        } else { document.getElementById('error-msg').style.display = 'block'; }
     }
 
-    // السماح بالدخول عند ضغط زر Enter
-    [userInput, passInput].forEach(input => {
-        input.addEventListener('keypress', (e) => { if (e.key === 'Enter') validateLogin(); });
-    });
+    function startScanner() {
+        document.getElementById('scannerModal').style.display = 'flex';
+        html5QrCode = new Html5Qrcode("reader");
+        const qrSize = window.innerWidth < 400 ? 160 : 200;
+        const config = { fps: 25, qrbox: { width: qrSize, height: qrSize } };
+        
+        html5QrCode.start({ facingMode: "environment" }, config, (text) => {
+            if(isScanning) return;
+            const eng = document.getElementById('engName').value;
+            if(!eng) { alert("Select Engineer!"); return; }
 
-    window.onclick = (event) => { if (event.target == modal) closeLogin(); }
-  </script>
+            let cleanID = text.includes("empCode=") ? text.split("empCode=")[1].split("&")[0] : text;
+            
+            if(cleanID === lastCode) {
+                document.getElementById('scanStatus').innerText = "⚠️ Duplicate ID: " + cleanID;
+                document.getElementById('scanStatus').style.color = "orange";
+                return;
+            }
+
+            isScanning = true; lastCode = cleanID;
+            document.getElementById('scanBox').classList.add('flash-success');
+            new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3').play();
+            
+            totalCount++;
+            document.getElementById('count').innerText = totalCount;
+            document.getElementById('scanStatus').innerText = "✅ Sent: " + cleanID;
+            document.getElementById('scanStatus').style.color = "#00ff00";
+
+            // تنسيق الوقت والتاريخ بشكل دقيق ليفهمه جوجل شيت (التاريخ + المسافة + الوقت)
+            const now = new Date();
+            const fullDateTime = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear() + " " + 
+                               now.getHours().toString().padStart(2, '0') + ":" + 
+                               now.getMinutes().toString().padStart(2, '0') + ":" + 
+                               now.getSeconds().toString().padStart(2, '0');
+
+            // إرسال البيانات
+            fetch(GOOGLE_URL, {
+                method: "POST", mode: "no-cors",
+                body: JSON.stringify({ 
+                    qr: cleanID, 
+                    line: lineDropdown.value, 
+                    engineer: eng,
+                    timestamp: fullDateTime 
+                })
+            });
+
+            setTimeout(() => { 
+                isScanning = false; 
+                document.getElementById('scanBox').classList.remove('flash-success');
+                document.getElementById('scanStatus').innerText = "Ready to Scan...";
+                document.getElementById('scanStatus').style.color = "#00ff00";
+            }, 1200);
+        });
+    }
+
+    function closeScanner() {
+        if(html5QrCode) {
+            html5QrCode.stop().then(() => {
+                document.getElementById('scannerModal').style.display = 'none';
+                totalCount = 0; document.getElementById('count').innerText = "0";
+                lastCode = "";
+            }).catch(() => document.getElementById('scannerModal').style.display = 'none');
+        }
+    }
+</script>
 </body>
 </html>
