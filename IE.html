@@ -3,167 +3,345 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RUBYRED - IE System</title>
+    <title>RUBYRED - IE Professional System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        :root { --primary: #da3535; --dark-bg: #1a1a1a; }
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f0f2f5; color: #333; transition: 0.3s; }
-        
-        /* Language Style */
-        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        select { padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; outline: none; cursor: pointer; font-weight: bold; }
+        /* المتغيرات اللونية للدارك مود */
+        :root {
+            --primary: #da3535;
+            --primary-hover: #ff4d4d;
+            --bg-deep: #0f0f0f;
+            --bg-card: #1a1a1a;
+            --text-main: #ffffff;
+            --text-dim: #b0b0b0;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
 
-        .hero { height: 35vh; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('pic/sewing.jpg') center/cover; display: flex; align-items: center; justify-content: center; color: white; }
-        .hero h1 { font-size: 2.8rem; text-align: center; }
-        .hero span { color: var(--primary); }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
 
-        .page { display: none; padding: 20px; animation: fadeIn 0.4s ease-in; }
+        /* Language Selector Area */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo { font-weight: 800; font-size: 1.2rem; letter-spacing: 1px; color: var(--primary); }
+
+        select {
+            background: var(--bg-card);
+            color: white;
+            border: 1px solid var(--glass-border);
+            padding: 8px 15px;
+            border-radius: 8px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 45vh;
+            background: linear-gradient(rgba(15, 15, 15, 0.8), rgba(15, 15, 15, 0.9)), url('pic/sewing.jpg') center/cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero h1 { font-size: 3.5rem; margin: 0; text-transform: uppercase; letter-spacing: 4px; }
+        .hero h1 span { color: var(--primary); text-shadow: 0 0 20px rgba(218, 53, 53, 0.5); }
+
+        /* Dashboard Cards */
+        .main-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: -60px auto 40px;
+            padding: 0 20px;
+        }
+
+        .menu-btn {
+            background: var(--bg-card);
+            padding: 50px 30px;
+            border-radius: 24px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-btn:hover {
+            transform: translateY(-12px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(218, 53, 53, 0.1);
+        }
+
+        .menu-btn i { font-size: 3.5rem; color: var(--primary); margin-bottom: 20px; }
+        .menu-btn h2 { margin: 0; font-size: 1.5rem; letter-spacing: 1px; }
+
+        /* Login Modal - Glassmorphism Style */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
+            z-index: 5000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-card {
+            background: linear-gradient(145deg, #1e1e1e, #141414);
+            padding: 40px;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 400px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .modal-card h2 { color: var(--primary); margin-bottom: 30px; font-size: 1.8rem; }
+
+        .input-group { position: relative; margin-bottom: 20px; }
+        .input-group i { position: absolute; left: 15px; top: 15px; color: var(--text-dim); }
+        .input-group input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            box-sizing: border-box;
+            transition: 0.3s;
+        }
+        .input-group input:focus { border-color: var(--primary); background: rgba(255,255,255,0.07); }
+
+        .login-submit {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .login-submit:hover { background: var(--primary-hover); transform: scale(1.02); }
+
+        /* Employee Display Page */
+        .page { display: none; padding: 40px 20px; animation: fadeIn 0.5s ease; }
         .active { display: block; }
 
-        .main-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; max-width: 1000px; margin: -50px auto 40px; padding: 0 20px; }
-        .card-btn { background: white; padding: 40px; border-radius: 20px; text-align: center; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: 0.3s; border-bottom: 0 solid var(--primary); }
-        .card-btn:hover { transform: translateY(-10px); border-bottom-width: 8px; }
-        .card-btn i { font-size: 3.5rem; color: var(--primary); margin-bottom: 20px; }
+        .emp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            max-width: 1300px;
+            margin: auto;
+        }
 
-        .results-container { max-width: 1200px; margin: auto; }
-        .emp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
-        .emp-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: 0.3s; border: 1px solid #eee; }
-        .emp-card:hover { transform: scale(1.02); }
-        .emp-img { width: 100%; height: 250px; object-fit: cover; background: #f9f9f9; border-bottom: 4px solid var(--primary); }
-        .emp-details { padding: 20px; }
-        .emp-details h3 { margin: 0 0 15px 0; color: var(--primary); font-size: 1.5rem; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
-        
-        .data-row { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px dashed #eee; padding-bottom: 5px; }
-        .data-label { font-weight: 700; color: #555; text-transform: capitalize; }
-        .data-val { color: #222; }
+        .emp-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            transition: 0.3s;
+        }
 
-        .search-input { width: 100%; padding: 15px; border-radius: 30px; border: 2px solid #ddd; margin-bottom: 30px; font-size: 1.1rem; outline: none; transition: 0.3s; }
-        .search-input:focus { border-color: var(--primary); }
+        .emp-card:hover { border-color: var(--primary); }
+        .emp-img { width: 100%; height: 280px; object-fit: cover; filter: grayscale(30%); transition: 0.5s; }
+        .emp-card:hover .emp-img { filter: grayscale(0%); transform: scale(1.05); }
 
-        .back-home-btn { background: #333; color: white; border: none; padding: 12px 25px; border-radius: 30px; cursor: pointer; margin-bottom: 20px; font-weight: bold; }
-        
-        @keyframes fadeIn { from {opacity: 0; transform: translateY(10px);} to {opacity: 1; transform: translateY(0);} }
+        .emp-info { padding: 25px; }
+        .emp-info h3 { margin: 0 0 15px 0; font-size: 1.6rem; color: var(--primary); }
+
+        .data-line { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 5px; }
+        .label { color: var(--text-dim); font-weight: 500; text-transform: capitalize; }
+
+        .search-container { max-width: 600px; margin: 0 auto 40px; }
+        .search-bar { width: 100%; padding: 18px 30px; border-radius: 50px; background: var(--bg-card); border: 1px solid var(--glass-border); color: white; font-size: 1.1rem; outline: none; }
+        .search-bar:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(218, 53, 53, 0.2); }
+
+        .btn-back { background: transparent; color: var(--text-dim); border: 1px solid var(--glass-border); padding: 10px 20px; border-radius: 10px; cursor: pointer; margin-bottom: 30px; transition: 0.3s; }
+        .btn-back:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         [dir="rtl"] { text-align: right; }
+        [dir="rtl"] .input-group i { left: auto; right: 15px; }
+        [dir="rtl"] .input-group input { padding: 15px 45px 15px 15px; }
     </style>
 </head>
-<body id="bodyMain">
+<body id="mainBody">
 
-    <div class="top-bar">
-        <div style="font-weight: bold; color: var(--primary);">RUBYRED IE</div>
-        <select id="langSelect" onchange="applyLang()">
+    <div class="top-nav">
+        <div class="logo">RUBY<span>RED</span></div>
+        <select id="langSelect" onchange="updateLang()">
             <option value="en">English</option>
             <option value="ar">العربية</option>
             <option value="tr">Türkçe</option>
         </select>
     </div>
 
-    <div id="pageHome" class="page active">
-        <div class="hero"><h1 id="heroTxt">RUBY<span>RED</span> GARMENT</h1></div>
+    <div id="homePage" class="page active" style="padding: 0;">
+        <div class="hero">
+            <h1 id="heroH1">RUBY<span>RED</span> GARMENT</h1>
+            <p id="heroP" style="color: var(--text-dim);">Industrial Engineering Department System</p>
+        </div>
         <div class="main-menu">
-            <div class="card-btn" onclick="askAdmin()">
-                <i class="fas fa-user-shield"></i>
-                <h2 id="btnAdmin">Admin Panel</h2>
+            <div class="menu-btn" onclick="toggleModal(true)">
+                <i class="fas fa-user-lock"></i>
+                <h2 id="txtAdmin">Admin Panel</h2>
             </div>
-            <div class="card-btn" onclick="alert('Please scan worker QR code')">
-                <i class="fas fa-id-badge"></i>
-                <h2 id="btnWorker">Worker Portal</h2>
+            <div class="menu-btn" onclick="alert('Scan QR Code to view your profile')">
+                <i class="fas fa-qrcode"></i>
+                <h2 id="txtWorker">Worker Portal</h2>
             </div>
         </div>
     </div>
 
-    <div id="pageDisplay" class="page">
-        <div class="results-container">
-            <button class="back-home-btn" onclick="location.href=location.pathname" id="btnBack">Back to Home</button>
-            <input type="text" id="query" class="search-input" placeholder="Search..." onkeyup="doSearch()">
-            <div id="employeeGrid" class="emp-grid"></div>
+    <div id="loginModal" class="modal-overlay">
+        <div class="modal-card">
+            <i class="fas fa-times" style="position: absolute; right: 25px; top: 25px; cursor: pointer; color: var(--text-dim);" onclick="toggleModal(false)"></i>
+            <h2 id="txtLoginTitle">Secure Access</h2>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="adminUser" placeholder="Username">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-key"></i>
+                <input type="password" id="adminPass" placeholder="Password">
+            </div>
+            <button class="login-submit" onclick="checkLogin()" id="btnLogin">Sign In</button>
+        </div>
+    </div>
+
+    <div id="displayPage" class="page">
+        <div class="results-container" style="max-width: 1300px; margin: auto;">
+            <button class="btn-back" onclick="location.href=location.pathname" id="btnBack">← Back Home</button>
+            <div id="adminControls" class="search-container">
+                <input type="text" id="searchInp" class="search-bar" placeholder="Filter by any data..." onkeyup="filter()">
+            </div>
+            <div id="empGrid" class="emp-grid"></div>
         </div>
     </div>
 
     <script>
-        const DICT = {
-            en: { hero: "RUBY<span>RED</span> GARMENT", admin: "Admin Panel", worker: "Worker Portal", back: "Back Home", search: "Search by any field...", dir: "ltr" },
-            ar: { hero: "روبي<span>ريد</span> للملابس", admin: "لوحة المسؤول", worker: "بوابة العامل", back: "العودة للرئيسية", search: "ابحث في أي مجال...", dir: "rtl" },
-            tr: { hero: "RUBY<span>RED</span> TEKSTİL", admin: "Yönetici Paneli", worker: "İşçi Portalı", back: "Ana Sayfa", search: "Herhangi bir alanda ara...", dir: "ltr" }
+        const LANGS = {
+            en: { hero: "RUBY<span>RED</span> GARMENT", admin: "Admin Panel", worker: "Worker Portal", login: "Secure Access", signin: "Sign In", back: "← Back Home", search: "Filter by any data...", dir: "ltr" },
+            ar: { hero: "روبي<span>ريد</span> للملابس", admin: "لوحة المسؤول", worker: "بوابة العامل", login: "دخول آمن", signin: "تسجيل الدخول", back: "العودة للرئيسية →", search: "بحث في كافة البيانات...", dir: "rtl" },
+            tr: { hero: "RUBY<span>RED</span> TEKSTİL", admin: "Yönetici Paneli", worker: "İşçi Portalı", login: "Güvenli Giriş", signin: "Giriş Yap", back: "← Ana Sayfaya Dön", search: "Verilere göre filtrele...", dir: "ltr" }
         };
 
-        const CSV_URL = "https://docs.google.com/spreadsheets/d/1U-KPGt5sxLaN2F7uy8InDxhXh3KYATFfh5bSJhZ4CBw/export?format=csv";
-        let db = [];
+        const SHEET_CSV = "https://docs.google.com/spreadsheets/d/1U-KPGt5sxLaN2F7uy8InDxhXh3KYATFfh5bSJhZ4CBw/export?format=csv";
+        let employees = [];
 
-        // دالة سحرية لتحويل روابط جوجل درايف لروابط مباشرة
-        function formatImg(url) {
-            if (!url) return 'https://via.placeholder.com/400x300?text=No+Photo';
+        // تحسين عرض صور جوجل درايف
+        function fixDriveUrl(url) {
+            if (!url) return 'https://via.placeholder.com/400x500?text=No+Photo';
             if (url.includes('drive.google.com')) {
-                let id = url.split('/d/')[1]?.split('/')[0] || url.split('id=')[1];
+                const id = url.split('/d/')[1]?.split('/')[0] || url.split('id=')[1];
                 return `https://lh3.googleusercontent.com/d/${id}`;
             }
             return url;
         }
 
-        async function loadData() {
-            const r = await fetch(CSV_URL);
-            const t = await r.text();
-            const lines = t.split('\n').filter(l => l.trim());
+        async function fetchData() {
+            const res = await fetch(SHEET_CSV);
+            const csv = await res.text();
+            const lines = csv.split('\n').filter(l => l.trim());
             const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
             
-            db = lines.slice(1).map(row => {
+            employees = lines.slice(1).map(row => {
                 const cells = row.split(',');
-                let item = {};
-                headers.forEach((h, i) => item[h] = cells[i]?.trim());
-                return item;
+                let obj = {};
+                headers.forEach((h, i) => obj[h] = cells[i]?.trim());
+                return obj;
             });
 
-            // فحص الـ QR
+            // فحص كود الموظف في الرابط (QR)
             const code = new URLSearchParams(window.location.search).get('code');
-            if(code) renderView(db.filter(e => e.code == code), false);
+            if(code) render(employees.filter(e => e.code == code), false);
         }
 
-        function applyLang() {
+        function updateLang() {
             const l = document.getElementById('langSelect').value;
-            const d = DICT[l];
-            document.getElementById('heroTxt').innerHTML = d.hero;
-            document.getElementById('btnAdmin').innerText = d.admin;
-            document.getElementById('btnWorker').innerText = d.worker;
+            const d = LANGS[l];
+            document.getElementById('heroH1').innerHTML = d.hero;
+            document.getElementById('txtAdmin').innerText = d.admin;
+            document.getElementById('txtWorker').innerText = d.worker;
+            document.getElementById('txtLoginTitle').innerText = d.login;
+            document.getElementById('btnLogin').innerText = d.signin;
             document.getElementById('btnBack').innerText = d.back;
-            document.getElementById('query').placeholder = d.search;
-            document.getElementById('bodyMain').dir = d.dir;
+            document.getElementById('searchInp').placeholder = d.search;
+            document.getElementById('mainBody').dir = d.dir;
         }
 
-        function askAdmin() {
-            if(prompt("Password:") === "808080") renderView(db, true);
-            else alert("Wrong!");
+        function toggleModal(show) { document.getElementById('loginModal').style.display = show ? 'flex' : 'none'; }
+
+        function checkLogin() {
+            const u = document.getElementById('adminUser').value;
+            const p = document.getElementById('adminPass').value;
+            if(u === "RUBYRED" && p === "808080") {
+                toggleModal(false);
+                render(employees, true);
+            } else { alert("Access Denied"); }
         }
 
-        function renderView(data, isAdmin) {
-            document.getElementById('pageHome').classList.remove('active');
-            document.getElementById('pageDisplay').classList.add('active');
-            document.getElementById('query').style.display = isAdmin ? 'block' : 'none';
+        function render(data, isAdmin) {
+            document.getElementById('homePage').classList.remove('active');
+            document.getElementById('displayPage').classList.add('active');
+            document.getElementById('adminControls').style.display = isAdmin ? 'block' : 'none';
             
-            const grid = document.getElementById('employeeGrid');
+            const grid = document.getElementById('empGrid');
             grid.innerHTML = data.map(e => {
-                let info = "";
+                let rows = "";
                 for(let key in e) {
                     if(key !== 'name' && key !== 'photo') {
-                        info += `<div class="data-row"><span class="data-label">${key}:</span><span class="data-val">${e[key]}</span></div>`;
+                        rows += `<div class="data-line"><span class="label">${key}:</span><span>${e[key]}</span></div>`;
                     }
                 }
                 return `
                 <div class="emp-card">
-                    <img class="emp-img" src="${formatImg(e.photo)}" onerror="this.src='https://via.placeholder.com/400x300?text=Photo+Error'">
-                    <div class="emp-details">
-                        <h3>${e.name || 'Employee'}</h3>
-                        ${info}
+                    <img class="emp-img" src="${fixDriveUrl(e.photo)}" onerror="this.src='https://via.placeholder.com/400x500?text=Image+Error'">
+                    <div class="emp-info">
+                        <h3>${e.name || 'Staff Member'}</h3>
+                        ${rows}
                     </div>
                 </div>`;
             }).join('');
         }
 
-        function doSearch() {
-            const q = document.getElementById('query').value.toLowerCase();
-            const filtered = db.filter(e => Object.values(e).some(v => v.toLowerCase().includes(q)));
-            renderView(filtered, true);
+        function filter() {
+            const q = document.getElementById('searchInp').value.toLowerCase();
+            const filtered = employees.filter(e => Object.values(e).some(v => v.toLowerCase().includes(q)));
+            render(filtered, true);
         }
 
-        window.onload = loadData;
+        window.onload = fetchData;
     </script>
 </body>
 </html>
