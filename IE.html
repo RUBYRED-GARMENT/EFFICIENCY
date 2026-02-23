@@ -298,9 +298,11 @@
                     return obj;
                 });
 
-                const code = new URLSearchParams(window.location.search).get('code');
-                if(code) {
-                    const found = employees.filter(e => e.code == code);
+                // تعديل هنا ليقرأ empCode من الرابط
+                const empCode = new URLSearchParams(window.location.search).get('empCode');
+                if(empCode) {
+                    // البحث في خانة الـ code داخل البيانات
+                    const found = employees.filter(e => e.code == empCode);
                     render(found, false);
                 }
             } catch (e) { console.error("Error fetching data", e); }
@@ -366,7 +368,7 @@
             const filtered = employees.filter(e => {
                 return Object.values(e).some(val => String(val).toLowerCase().includes(q));
             });
-            render(filtered, true); // نحافظ على true ليبقى وضع البحث نشطاً
+            render(filtered, true);
         }
 
         window.onload = fetchData;
