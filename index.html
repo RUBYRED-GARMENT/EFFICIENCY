@@ -137,6 +137,7 @@
             <option value="Eng. Asmaa">Eng. Asmaa</option>
             <option value="Eng. Esraa">Eng. Esraa</option>
             <option value="Eng. Eman">Eng. Eman</option>
+            <option value="Eng. Mahmoud">Eng. Mahmoud</option>
         </select>
         
         <select id="lineSelector" class="input-field"></select>
@@ -199,14 +200,12 @@
             document.getElementById('scanStatus').innerText = "✅ Sent: " + cleanID;
             document.getElementById('scanStatus').style.color = "#00ff00";
 
-            // تنسيق الوقت والتاريخ بشكل دقيق ليفهمه جوجل شيت (التاريخ + المسافة + الوقت)
             const now = new Date();
             const fullDateTime = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear() + " " + 
                                now.getHours().toString().padStart(2, '0') + ":" + 
                                now.getMinutes().toString().padStart(2, '0') + ":" + 
                                now.getSeconds().toString().padStart(2, '0');
 
-            // إرسال البيانات
             fetch(GOOGLE_URL, {
                 method: "POST", mode: "no-cors",
                 body: JSON.stringify({ 
